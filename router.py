@@ -7,9 +7,12 @@ def load_machines(file_path):
     with open(file_path, 'r') as f:
         return json.load(f)
 
-def ssh_to_machine(ip, port, user):
+def ssh_to_machine(ip, port, user, password):
     print(f"Connecting to {user}@{ip}:{port}...")
-    os.system(f"ssh {user}@{ip} -p {port}")
+    if password:
+        os.system(f"sshpass -p '{password}' ssh {user}@{ip} -p {port}")
+    else:
+        os.system(f"ssh {user}@{ip} -p {port}")
 
 def fuzzy_search(query, machines):
     query = query.lower()
@@ -77,7 +80,7 @@ def main(stdscr):
             if filtered_machines:
                 selected_machine = filtered_machines[selected_idx]
                 curses.endwin()  # End curses mode
-                ssh_to_machine(selected_machine['ip'], selected_machine['port'], selected_machine['user'])
+                ssh_to_machine(selected_machine['ip'], selected_machine['port'], selected_machine['user'], selected_machine.get('password'))
                 break
         elif key == 27:  # ESC key
             break

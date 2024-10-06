@@ -3,6 +3,7 @@
         "alias": "Machine 1",
         "ip": "192.168.1.1",
         "port": 22,
-        "user": "user1"
+        "user": "user1",
+        "password": "password1"
     }
 ]
